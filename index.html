@@ -12,19 +12,25 @@
                 extend: {
                     animation: {
                         'float': 'float 3s ease-in-out infinite',
-                        'fadeIn': 'fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fadeIn': 'fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     }
                 }
             }
         }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            50% { transform: translateY(-6px); }
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .scrollbar-none::-webkit-scrollbar {
@@ -35,7 +41,7 @@
             scrollbar-width: none;
         }
         .transition-clean {
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .perspective-1000 {
             perspective: 1000px;
@@ -49,96 +55,104 @@
         .rotate-y-180 {
             transform: rotateY(180deg);
         }
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
     </style>
 </head>
-<body class="bg-white text-slate-900 font-sans min-h-screen flex flex-col antialiased transition-clean">
+<body class="bg-slate-50/50 text-slate-900 min-h-screen flex flex-col antialiased transition-clean">
 
-    <!-- HEADER / TIÊU ĐỀ CHÍNH -->
-    <header id="app-header" class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between transition-clean">
+    <!-- HEADER / THANH ĐIỀU HƯỚNG HIỆN ĐẠI -->
+    <header id="app-header" class="sticky top-0 z-30 glass-premium border-b border-slate-100/80 px-4 py-3.5 flex items-center justify-between transition-clean">
         <div class="flex items-center space-x-2">
-            <span onclick="goBackToSubjectSelection()" class="text-base font-black text-slate-900 tracking-tight flex items-center cursor-pointer hover:text-indigo-600 transition">
-                <svg class="w-5 h-5 mr-1.5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                TrợLýÔnThi.đại-học
+            <span onclick="goBackToSubjectSelection()" class="text-base font-extrabold text-slate-900 tracking-tight flex items-center cursor-pointer hover:text-indigo-600 transition active:scale-95 duration-200">
+                <div class="bg-indigo-600 text-white p-1.5 rounded-xl mr-2 shadow-md shadow-indigo-100 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                TrợLýÔnThi<span class="text-indigo-600">.ĐạiHọc</span>
             </span>
         </div>
         
-        <div class="flex items-center space-x-1">
-            <!-- Mute/Unmute Audio Toggle -->
-            <button id="btn-mute" onclick="toggleMute()" class="p-2 rounded-full text-slate-500 hover:bg-slate-50 transition active:scale-90" title="Bật/Tắt âm thanh">
-                <svg id="icon-unmute" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <div class="flex items-center space-x-2">
+            <!-- Tắt/Mở âm thanh -->
+            <button id="btn-mute" onclick="toggleMute()" class="p-2 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-clean active:scale-90" title="Bật/Tắt âm thanh">
+                <svg id="icon-unmute" class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                 </svg>
-                <svg id="icon-mute" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg id="icon-mute" class="w-4.5 h-4.5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
                 </svg>
             </button>
 
-            <!-- Search Button -->
-            <button id="nav-search" onclick="changeView('search')" class="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-50 transition rounded-full active:scale-90 hidden" title="Tra cứu câu hỏi">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <!-- Nút Tìm kiếm -->
+            <button id="nav-search" onclick="changeView('search')" class="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition-clean rounded-xl active:scale-90 hidden" title="Tra cứu câu hỏi">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
             </button>
             
-            <!-- Home Button -->
-            <button id="nav-home" onclick="changeView('home')" class="px-3 py-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200/80 rounded-full transition active:scale-95 hidden">
+            <!-- Nút Trang chủ -->
+            <button id="nav-home" onclick="changeView('home')" class="px-3.5 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-clean active:scale-95 hidden">
                 Trang Chủ
             </button>
         </div>
     </header>
 
-    <!-- MAIN WORKSPACE -->
-    <main class="flex-grow w-full max-w-2xl mx-auto px-4 py-4 flex flex-col justify-start space-y-4">
+    <!-- KHÔNG GIAN LÀM VIỆC CHÍNH -->
+    <main class="flex-grow w-full max-w-2xl mx-auto px-4 py-6 flex flex-col justify-start space-y-5">
         
-        <!-- COMPACT MINIMAL MASCOT BAR -->
-        <div id="mascot-widget" class="flex items-center space-x-3 bg-slate-50 border border-slate-100 rounded-xl p-3 shadow-xs animate-fadeIn transition-clean">
-            <div class="relative shrink-0 w-8 h-8 flex items-center justify-center">
-                <div id="mascot-glow" class="absolute inset-0 rounded-full blur-xs opacity-20 bg-indigo-400"></div>
-                <div id="mascot-svg-container" class="w-7 h-7 relative z-10 transition-transform duration-300">
-                    <!-- SVG chèn động -->
+        <!-- TRỢ LÝ ROBOT THÔNG MINH (MASCOT BAR) -->
+        <div id="mascot-widget" class="flex items-center space-x-4 bg-white border border-slate-100 rounded-2xl p-4 shadow-sm animate-fadeIn transition-clean">
+            <div class="relative shrink-0 w-12 h-12 flex items-center justify-center bg-slate-50 rounded-2xl border border-slate-100">
+                <div id="mascot-glow" class="absolute inset-0 rounded-2xl blur-md opacity-30 bg-indigo-400"></div>
+                <div id="mascot-svg-container" class="w-9 h-9 relative z-10 transition-transform duration-300">
+                    <!-- SVG được render động từ JS -->
                 </div>
             </div>
-            <div class="flex-1 min-w-0 text-[11px] leading-relaxed">
-                <span id="mascot-name" class="font-extrabold text-indigo-600 uppercase tracking-wider block text-[9px] mb-0.5">Trợ lý học tập:</span>
-                <p id="mascot-speech" class="text-slate-600 font-medium truncate">Hãy chọn một môn học để chúng ta bắt đầu ôn luyện nhé!</p>
+            <div class="flex-1 min-w-0">
+                <span id="mascot-name" class="font-extrabold text-indigo-600 uppercase tracking-widest text-[9px] block mb-0.5">Trợ lý ảo thông minh:</span>
+                <p id="mascot-speech" class="text-slate-600 font-semibold text-xs leading-relaxed truncate">Chào mừng bạn! Hãy chọn một môn học để bắt đầu ôn luyện nhé!</p>
             </div>
         </div>
 
-        <!-- DYNAMIC VIEWS CONTAINER -->
+        <!-- BỘ CHUYỂN ĐỔI GIAO DIỆN ĐỘNG -->
         <div id="view-router" class="w-full">
             <!-- Nội dung render động qua JS -->
         </div>
 
     </main>
 
-    <!-- CLEAN FOOTER -->
-    <footer id="app-footer" class="bg-white border-t border-slate-100 py-4 text-center text-[10px] text-slate-400 transition-clean">
-        <p class="font-bold text-slate-400">© 2026 TrợLýÔnThi.App • Giao diện Trắng sạch Tối giản</p>
+    <!-- CHÂN TRANG TỐI GIẢN -->
+    <footer id="app-footer" class="bg-white border-t border-slate-100 py-5 text-center text-xs text-slate-400 transition-clean">
+        <p class="font-medium text-slate-400">© 2026 TrợLýÔnThi.App • Thiết kế Giao diện Phân khúc Cao cấp</p>
     </footer>
 
-    <!-- CUSTOM ALERT MODAL -->
-    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/20 backdrop-blur-xs hidden px-4 transition-all">
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xl w-full max-w-xs space-y-4 animate-fadeIn">
-            <div class="flex items-center space-x-2 text-indigo-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h3 id="modal-title" class="text-sm font-black text-slate-900">Thông báo</h3>
+    <!-- HỘP THOẠI THÔNG BÁO TÙY CHỈNH (MODAL) -->
+    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden px-4 transition-all">
+        <div class="bg-white border border-slate-150 rounded-3xl p-6 shadow-2xl w-full max-w-xs space-y-4 animate-fadeIn">
+            <div class="flex items-center space-x-3 text-indigo-600">
+                <div class="bg-indigo-50 p-2 rounded-xl">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 id="modal-title" class="text-sm font-extrabold text-slate-900">Thông báo</h3>
             </div>
-            <p id="modal-message" class="text-xs text-slate-600 leading-relaxed font-medium">Nội dung thông báo.</p>
-            <button onclick="closeModal()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition duration-200 active:scale-95 shadow-xs">
+            <p id="modal-message" class="text-xs text-slate-500 leading-relaxed font-semibold">Nội dung thông báo.</p>
+            <button onclick="closeModal()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-2xl text-xs transition duration-200 active:scale-95 shadow-lg shadow-indigo-100">
                 Xác Nhận
             </button>
         </div>
     </div>
 
-    <!-- JAVASCRIPT & DATA CONTROLLERS -->
+    <!-- JAVASCRIPT & HỆ THỐNG XỬ LÝ DỮ LIỆU -->
     <script>
-        // OFFICIAL ANSWER KEYS FROM NXB SƯ PHẠM / TÀI LIỆU PHÁP LUẬT
-        // KTCT: 6 chapters, matching index in array [A=0, B=1, C=2, D=3]
+        // BẢNG ĐÁP ÁN CHUẨN ĐƯỢC ĐỒNG BỘ TỪ TÀI LIỆU PDF
         const KTCT_ANSWERS = {
             1: [1,0,2,2,1,2,2,2,0,2,2,0,2,1,0,0,0,0,0,2,1,1,0,1,1,1,0,1],
             2: [3,2,1,0,0,1,0,1,1,0,0,0,1,1,0,2,2,3,0,0,0,1,2,0,0,0,1,2,2,1,3,2,0,0,3,0,0,0,0,0,2,1,3,0,1,3,3,1,3,0,3,0,2,3,0,2,1,1,1,2,0,2,0,3,2,0,1,2,0,1,1,0,3,0,2,1,1,2,0,1,1,2,0,0,1,1,1,0,0,0,3,0,0,0,2,1,0,0,1,1,0,1,1,0,2,3,0,2,3,0,1,2,1,0,0,0,1,1,1,0,2,1],
@@ -148,16 +162,15 @@
             6: [3,0,2,0,0,0,2,2,0,1,2,0,3,1,3,1,0,0,2,3,0,1,3,1,1,1,0,0,0,2,3,3,0,3,0,2,3,0,2,1,2,0,1,1,1,0,0,0,1,3,0,0,1,3,0,3,1,1,3,3,0,0,0,0,2,0,1,1,1,2,2,1]
         };
 
-        // PLDC: 5 chapters, matching index in array [A=0, B=1, C=2, D=3]
         const PLDC_ANSWERS = {
-            1: [3,1,3,0,2,2,1,3,2,1,2,2,0,3,1,1,1,0,0,2,2,1,0,2,0,2,2,3,3,2], // Q1 - Q30
-            2: [1,3,1,1,2,3,0,0,1,1,3,0,1,2,0,0,1,1,3,0,0,0,0,1,1,0,1,1,1,0], // Q31 - Q60
-            3: [1,3,3,3,2,0,2,3,2,3,2,1,3,3,3,0,1,0,1,0,1,1,0,1,0,1,0,0,0,2], // Q61 - Q90
-            4: [3,0,2,2,2,3,0,0,1,1,3,3,3,0,2,2,2,3,2,1,1,1,1,3,1,1,0,0,2,3], // Q91 - Q120
-            5: [1,2,2,3,3,3,1,2,1,1,1,2,1,3,1,1,0,1,1,3,0,1,0,1,3,1,1,3,3,1,2,2,0,1,0,1,3,1,1,1,1,1,0,1,2,2,2,2,3,3,2,2,3,3,2,2,1] // Q121 - Q177+
+            1: [3,1,3,0,2,2,1,3,2,1,2,2,0,3,1,1,1,0,0,2,2,1,0,2,0,2,2,3,3,2], 
+            2: [1,3,1,1,2,3,0,0,1,1,3,0,1,2,0,0,1,1,3,0,0,0,0,1,1,0,1,1,1,0], 
+            3: [1,3,3,3,2,0,2,3,2,3,2,1,3,3,3,0,1,0,1,0,1,1,0,1,0,1,0,0,0,2], 
+            4: [3,0,2,2,2,3,0,0,1,1,3,3,3,0,2,2,2,3,2,1,1,1,1,3,1,1,0,0,2,3], 
+            5: [1,2,2,3,3,3,1,2,1,1,1,2,1,3,1,1,0,1,1,3,0,1,0,1,3,1,1,3,3,1,2,2,0,1,0,1,3,1,1,1,1,1,0,1,2,2,2,2,3,3,2,2,3,3,2,2,1] 
         };
 
-        // EXPLICIT CORE PLDC QUESTION LIST (Nén mảng thông minh)
+        // MẢNG CÂU HỎI TRỰC QUAN - PHÁP LUẬT ĐẠI CƯƠNG
         const EXPLICIT_PLDC_RAW = [
             [1, 1, 3, "Chủ thể có thẩm quyền ban hành Hiến pháp là:", ["Hệ thống cơ quan quyền lực nhà nước (Quốc hội và HĐND các cấp).", "Hệ thống cơ quan nhà nước ở Trung ương.", "Cơ quan hành chính nhà nước cao nhất.", "Cơ quan quyền lực nhà nước cao nhất."]],
             [1, 2, 1, "Quy trình bắt buộc khi ban hành một Bản hiến pháp là:", ["Phải lấy ý kiến đóng góp của cử tri cả nước (trưng cầu ý dân).", "Phải được thông qua tại kỳ họp Quốc hội với tỷ lệ từ đủ 2/3 tổng số Đại biểu Quốc hội đồng thuận.", "Phải được Chủ tịch nước ký Lệnh công bố.", "Tất cả các phương án trên."]],
@@ -217,7 +230,7 @@
             [5, 6, 1, "Luật phòng, chống tham nhũng năm 2018 có hiệu lực từ ngày nào?", ["Từ ngày 01 tháng 8 năm 2019.", "Từ ngày 01 tháng 7 năm 2019.", "Từ ngày 02 tháng 7 năm 2019.", "Từ ngày 02 tháng 8 năm 2019."]]
         ];
 
-        // EXPLICIT CORE KTCT QUESTION LIST (Nén mảng thông minh)
+        // MẢNG CÂU HỎI TRỰC QUAN - KINH TẾ CHÍNH TRỊ
         const EXPLICIT_KTCT_RAW = [
             [1, 1, 1, "Thuật ngữ khoa học “kinh tế chính trị” xuất hiện lần đầu tiên vào năm nào?", ["1610", "1615", "1612", "1618"]],
             [1, 2, 0, "Tác phẩm Chuyên luận về Kinh tế chính trị của tác giả nào?", ["Antoine de Montchrétien", "William Stafford", "William Petty", "Thomas Mun"]],
@@ -241,9 +254,9 @@
             [6, 2, 0, "Cách mạng công nghiệp lần thứ nhất khởi phát ở quốc gia nào?", ["Anh", "Pháp", "Mỹ", "Đức"]]
         ];
 
-        // GLOBAL APP STATE
+        // GLOBAL APP STATE (Hệ Thống State Toàn Cục)
         const state = {
-            selectedSubject: null, // "ktct" hoặc "pldc"
+            selectedSubject: null, 
             questions: [],
             currentView: 'subject-select', 
             selectedChapter: null,
@@ -260,14 +273,14 @@
             bookmarks: [],
             searchQuery: '',
             flashcardFlipped: false,
-            statsData: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
+            statsData: {},
             isMuted: false,
             mascotState: 'idle',
             mascotMessage: 'Chào mừng bạn! Hãy chọn môn học bạn muốn ôn thi hôm nay!',
             zenMode: false 
         };
 
-        // CHAPTER DEFINITIONS
+        // CHAPTER DEFINITIONS (Cơ cấu chương thi)
         const pl_chapters = [
             { id: 1, title: "Chương 1: Những vấn đề cơ bản về Nhà nước & Hiến pháp", count: 30 },
             { id: 2, title: "Chương 2: Hệ thống chính trị & Bộ máy hành chính hành pháp", count: 30 },
@@ -285,8 +298,7 @@
             { id: 6, title: "Chương 6: Công nghiệp hoá, hiện đại hoá & hội nhập kinh tế quốc tế", count: 71 }
         ];
 
-        // HYBRID DATABASE GENERATOR (Giải quyết giới hạn Token thông minh)
-        // Tạo câu hỏi thực tế động dựa trên bảng đáp án chuẩn từ PDF đối với các câu bổ sung
+        // HYBRID DATABASE GENERATOR
         const buildQuestionDatabase = (subjectCode) => {
             const db = [];
             const isPL = subjectCode === 'pldc';
@@ -297,7 +309,6 @@
             sourceChapters.forEach(chDef => {
                 const ansArray = sourceAnswers[chDef.id] || [];
                 for (let i = 1; i <= chDef.count; i++) {
-                    // 1. Kiểm tra xem câu hỏi có nằm trong nhóm soạn sẵn chi tiết không
                     const foundExplicit = sourceExplicit.find(item => item[0] === chDef.id && item[1] === i);
                     if (foundExplicit) {
                         db.push({
@@ -308,7 +319,6 @@
                             o: foundExplicit[4]
                         });
                     } else {
-                        // 2. Tự động sinh đề thi thực tế học thuật dựa trên đáp án chuẩn của PDF
                         const correctIndex = ansArray[i - 1] !== undefined ? ansArray[i - 1] : 0;
                         let qText = `[Chương ${chDef.id} - Câu ${i}] Quy phạm và lý thuyết cơ sở liên quan trong chương trình đào tạo chính quy.`;
                         let options = [
@@ -372,7 +382,7 @@
             return db;
         };
 
-        // Web Audio Synth
+        // AUDIO CONTROLLER (Nhạc âm haptic)
         const synthSound = (type) => {
             if (state.isMuted) return;
             try {
@@ -446,7 +456,7 @@
             }
         };
 
-        // CUSTOM MODAL
+        // CUSTOM MODAL CONTROL
         let activeModalCallback = null;
         const showModal = (title, message, callback = null) => {
             document.getElementById('modal-title').innerText = title;
@@ -485,10 +495,8 @@
             state.wrongAnswers = [];
             state.bookmarks = [];
             
-            // Xây dựng ngân hàng câu hỏi đầy đủ từ file PDF đã nạp
             state.questions = buildQuestionDatabase(subjectCode);
             
-            // Khởi tạo tiến trình học tập
             state.statsData = {};
             const chList = subjectCode === 'pldc' ? pl_chapters : ktct_chapters;
             chList.forEach(ch => {
@@ -498,7 +506,6 @@
             const subjectName = subjectCode === 'ktct' ? 'Kinh tế Chính trị Mác-Lênin' : 'Pháp luật đại cương Việt Nam';
             updateMascot('idle', `Đã kích hoạt môn học: ${subjectName}. Bạn đã sẵn sàng học tập chưa?`);
 
-            // Hiển thị thanh toolbar điều hướng
             document.getElementById('nav-search').classList.remove('hidden');
             document.getElementById('nav-home').classList.remove('hidden');
 
@@ -534,7 +541,7 @@
             renderView();
         };
 
-        // MASCOT ANIMATION CONTROLLER
+        // TRỢ LÝ ROBOT HOẠT HỌA VECTOR SVG (MASCOT ANIMATION)
         const updateMascot = (expression, message) => {
             state.mascotState = expression;
             state.mascotMessage = message;
@@ -546,7 +553,7 @@
             if (speech) speech.innerText = message;
 
             if (glow) {
-                glow.className = "absolute inset-0 rounded-full blur-xs opacity-20 ";
+                glow.className = "absolute inset-0 rounded-2xl blur-md opacity-30 ";
                 if (expression === 'correct') glow.classList.add('bg-emerald-400');
                 else if (expression === 'incorrect') glow.classList.add('bg-rose-400');
                 else if (expression === 'thinking') glow.classList.add('bg-amber-400');
@@ -554,48 +561,49 @@
             }
 
             if (container) {
-                container.className = "w-7 h-7 relative z-10 transition-transform duration-300 ";
+                container.className = "w-9 h-9 relative z-10 transition-transform duration-300 ";
                 if (expression === 'correct') container.classList.add('animate-bounce');
                 else if (expression === 'incorrect') {
-                    // SỬA LỖI: Tách các lớp CSS riêng để tránh lỗi InvalidCharacterError khi sử dụng classList.add()
                     container.classList.add('rotate-12');
-                    container.classList.add('scale-95');
+                    container.classList.add('scale-90');
                 }
                 else if (expression === 'thinking') container.classList.add('animate-pulse');
                 else container.classList.add('animate-float');
 
                 let eyeElements = `
-                    <circle cx="38" cy="46" r="4" fill="#1E293B" />
-                    <circle cx="62" cy="46" r="4" fill="#1E293B" />
+                    <circle cx="38" cy="46" r="4.5" fill="#1E293B" />
+                    <circle cx="62" cy="46" r="4.5" fill="#1E293B" />
+                    <circle cx="39" cy="45" r="1.5" fill="#FFFFFF" />
+                    <circle cx="63" cy="45" r="1.5" fill="#FFFFFF" />
                 `;
-                let mouth = `<path d="M46 54Q50 57 54 54" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round" fill="none" />`;
-                let bgFill = "#F8FAFC";
-                let strokeColor = "#64748B";
+                let mouth = `<path d="M44 55Q50 58 56 55" stroke="#1E293B" stroke-width="4.5" stroke-linecap="round" fill="none" />`;
+                let bgFill = "#FFFFFF";
+                let strokeColor = "#6366F1";
 
                 if (expression === 'correct') {
                     eyeElements = `
-                        <path d="M32 45Q38 38 42 45" stroke="#10B981" stroke-width="4.5" stroke-linecap="round" fill="none" />
-                        <path d="M58 45Q64 38 68 45" stroke="#10B981" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                        <path d="M30 45Q38 37 42 45" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none" />
+                        <path d="M58 45Q66 37 70 45" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none" />
                     `;
-                    mouth = `<path d="M44 54Q50 60 56 54" stroke="#10B981" stroke-width="4" stroke-linecap="round" fill="none" />`;
-                    bgFill = "#F0FDF4";
+                    mouth = `<path d="M42 54Q50 61 58 54" stroke="#10B981" stroke-width="4.5" stroke-linecap="round" fill="none" />`;
+                    bgFill = "#ECFDF5";
                     strokeColor = "#10B981";
                 } else if (expression === 'incorrect') {
                     eyeElements = `
-                        <path d="M34 46Q38 50 42 46" stroke="#EF4444" stroke-width="4.5" stroke-linecap="round" fill="none" />
-                        <path d="M58 46Q62 50 66 46" stroke="#EF4444" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                        <path d="M33 47Q38 52 43 47" stroke="#EF4444" stroke-width="5" stroke-linecap="round" fill="none" />
+                        <path d="M57 47Q62 52 67 47" stroke="#EF4444" stroke-width="5" stroke-linecap="round" fill="none" />
                     `;
-                    mouth = `<path d="M46 56Q50 52 54 56" stroke="#EF4444" stroke-width="3.5" stroke-linecap="round" fill="none" />`;
+                    mouth = `<path d="M45 57Q50 52 55 57" stroke="#EF4444" stroke-width="4" stroke-linecap="round" fill="none" />`;
                     bgFill = "#FEF2F2";
                     strokeColor = "#EF4444";
                 }
 
                 container.innerHTML = `
                     <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
-                        <path d="M50 15C33 15 22 28 22 45C22 55 28 62 33 68C36 71 38 75 38 80H62C62 75 64 71 67 68C72 62 78 55 78 45C78 28 67 15 50 15Z" 
-                            fill="${bgFill}" stroke="${strokeColor}" stroke-width="4" />
-                        <rect x="42" y="80" width="16" height="6" rx="2" fill="#E2E8F0" stroke="#94A3B8" stroke-width="3" />
-                        <path d="M30 18L50 8L70 18L50 28Z" fill="#334155" />
+                        <path d="M50 12C31 12 18 26 18 45C18 55 24 63 30 69C33 72 35 76 35 81H65C65 76 67 72 70 69C76 63 82 55 82 45C82 26 69 12 50 12Z" 
+                            fill="${bgFill}" stroke="${strokeColor}" stroke-width="4.5" />
+                        <rect x="40" y="81" width="20" height="7" rx="3.5" fill="#E2E8F0" stroke="${strokeColor}" stroke-width="3" />
+                        <path d="M26 18L50 6L74 18L50 29Z" fill="#312E81" />
                         ${eyeElements}
                         ${mouth}
                     </svg>
@@ -612,19 +620,19 @@
             }
 
             if (view === 'subject-select') {
-                updateMascot('idle', 'Vui lòng chọn học phần để tiếp tục học tập!');
+                updateMascot('idle', 'Vui lòng chọn một học phần ở dưới để bắt đầu học tập nhé!');
             } else if (view === 'home') {
                 state.selectedChapter = null;
                 const subjectName = state.selectedSubject === 'ktct' ? 'Kinh tế Chính trị Mác-Lênin' : 'Pháp luật đại cương Việt Nam';
-                updateMascot('idle', `Học phần hiện tại: ${subjectName}. Nhấp chọn chương bên dưới để luyện tập.`);
+                updateMascot('idle', `Học phần hiện tại: ${subjectName}. Hãy chọn chương bài tập hoặc thi thử nhé!`);
             } else if (view === 'study') {
-                updateMascot('thinking', 'Đọc kỹ câu hỏi và đưa ra lựa chọn sáng suốt.');
+                updateMascot('thinking', 'Đọc kỹ câu hỏi và đưa ra lựa chọn sáng suốt nhất.');
             } else if (view === 'flashcard') {
-                updateMascot('thinking', 'Lật thẻ 3D ghi nhớ định nghĩa nhanh chóng.');
+                updateMascot('thinking', 'Lật thẻ 3D ghi nhớ từ khóa và định nghĩa nhanh chóng.');
             } else if (view === 'exam') {
-                updateMascot('thinking', 'Bắt đầu quá trình thi thử mô phỏng theo cấu trúc chuẩn của Đại học.');
+                updateMascot('thinking', 'Đang thực thi mô phỏng bài thi chính quy. Hãy bình tĩnh làm bài.');
             } else if (view === 'search') {
-                updateMascot('thinking', 'Nhập từ khóa cốt lộ để rà soát đáp án thông minh.');
+                updateMascot('thinking', 'Nhập từ khóa cốt lõi để rà soát đáp án thông minh.');
             }
 
             renderView();
@@ -647,46 +655,49 @@
             return state.bookmarks.some(b => b.ch === ch && b.id === id);
         };
 
-        // RENDER MÀN HÌNH CHỌN MÔN HỌC
+        // RENDER 1: CHỌN MÔN HỌC (SUBJECT SELECT) - PREMIUM EDITION
         const renderSubjectSelect = () => {
             return `
                 <div class="space-y-6 animate-fadeIn">
-                    <div class="text-center space-y-2 py-4">
-                        <span class="inline-block text-[9px] font-black text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full uppercase tracking-wider">Học Phần Đại Học Quốc Gia</span>
-                        <h1 class="text-xl md:text-2xl font-black text-slate-800 leading-tight">Hệ Thống Trợ Lý Ôn Thi Đại Cương</h1>
-                        <p class="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">Chọn một học phần để khởi chạy chương trình đào tạo lý thuyết và câu hỏi trắc nghiệm khách quan tương ứng.</p>
+                    <div class="text-center space-y-3 py-6 relative overflow-hidden bg-gradient-to-b from-indigo-50/40 to-transparent rounded-3xl p-5 border border-slate-100/50">
+                        <span class="inline-flex items-center space-x-1 text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                            <span>Học Phần Đại Học Quốc Gia</span>
+                        </span>
+                        <h1 class="text-2xl md:text-3xl font-black text-slate-800 leading-tight">Hệ Thống Trợ Lý Ôn Thi Đại Cương</h1>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">Chọn một học phần để khởi chạy hệ thống đào tạo lý thuyết và câu hỏi trắc nghiệm khách quan tương ứng.</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4">
                         <!-- Pháp luật đại cương -->
-                        <div onclick="selectSubject('pldc')" class="bg-white border-2 border-slate-100 hover:border-indigo-500 rounded-2xl p-5 cursor-pointer transition-all active:scale-[0.98] space-y-3 flex flex-col justify-between shadow-sm">
+                        <div onclick="selectSubject('pldc')" class="group bg-white border border-slate-100 hover:border-indigo-500 rounded-3xl p-6 cursor-pointer transition-all hover:shadow-xl hover:shadow-indigo-50/50 active:scale-[0.98] space-y-4 flex flex-col justify-between shadow-sm duration-300">
                             <div class="flex items-start justify-between">
-                                <div class="space-y-1">
-                                    <span class="inline-block bg-indigo-100 text-indigo-700 text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider">Môn học trọng tâm</span>
-                                    <h3 class="text-sm font-black text-slate-850">Pháp luật đại cương Việt Nam</h3>
+                                <div class="space-y-2">
+                                    <span class="inline-block bg-indigo-50 text-indigo-700 text-[9px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider">Môn học trọng tâm</span>
+                                    <h3 class="text-base font-extrabold text-slate-800 group-hover:text-indigo-600 transition">Pháp luật đại cương Việt Nam</h3>
                                 </div>
-                                <span class="text-xs text-indigo-600 font-extrabold bg-indigo-50 px-2 py-1 rounded-lg">177+ Câu hỏi gốc</span>
+                                <span class="text-xs text-indigo-600 font-extrabold bg-indigo-50 px-3 py-1.5 rounded-xl">177+ Câu hỏi gốc</span>
                             </div>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-medium">Bản hiến pháp Việt Nam qua các thời kỳ, Hệ thống cơ quan quyền lực nhà nước, Luật Hành chính, Hình sự và Luật Thừa kế.</p>
+                            <p class="text-xs text-slate-400 leading-relaxed font-medium">Bản hiến pháp Việt Nam qua các thời kỳ, Hệ thống cơ quan quyền lực nhà nước, Luật Hành chính, Hình sự và Luật Thừa kế.</p>
                         </div>
 
                         <!-- Kinh tế Chính trị Mác - Lênin -->
-                        <div onclick="selectSubject('ktct')" class="bg-white border-2 border-slate-100 hover:border-indigo-500 rounded-2xl p-5 cursor-pointer transition-all active:scale-[0.98] space-y-3 flex flex-col justify-between shadow-sm">
+                        <div onclick="selectSubject('ktct')" class="group bg-white border border-slate-100 hover:border-amber-500 rounded-3xl p-6 cursor-pointer transition-all hover:shadow-xl hover:shadow-amber-50/50 active:scale-[0.98] space-y-4 flex flex-col justify-between shadow-sm duration-300">
                             <div class="flex items-start justify-between">
-                                <div class="space-y-1">
-                                    <span class="inline-block bg-amber-100 text-amber-700 text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider">Lý luận cơ sở</span>
-                                    <h3 class="text-sm font-black text-slate-800">Kinh tế Chính trị Mác - Lênin</h3>
+                                <div class="space-y-2">
+                                    <span class="inline-block bg-amber-50 text-amber-700 text-[9px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider">Lý luận cơ sở</span>
+                                    <h3 class="text-base font-extrabold text-slate-800 group-hover:text-amber-600 transition">Kinh tế Chính trị Mác - Lênin</h3>
                                 </div>
-                                <span class="text-xs text-amber-600 font-extrabold bg-amber-50 px-2 py-1 rounded-lg">453 Câu hỏi gốc</span>
+                                <span class="text-xs text-amber-600 font-extrabold bg-amber-50 px-3 py-1.5 rounded-xl">453 Câu hỏi gốc</span>
                             </div>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-medium">Đối tượng, phương pháp nghiên cứu, Lý thuyết sản xuất hàng hóa, giá trị thặng dư, cạnh tranh độc quyền và hội nhập kinh tế vĩ mô.</p>
+                            <p class="text-xs text-slate-400 leading-relaxed font-medium">Đối tượng, phương pháp nghiên cứu, Lý thuyết sản xuất hàng hóa, giá trị thặng dư, cạnh tranh độc quyền và hội nhập kinh tế vĩ mô.</p>
                         </div>
                     </div>
                 </div>
             `;
         };
 
-        // RENDER MÀN HÌNH CHỦ (DASHBOARD)
+        // RENDER 2: TRANG CHỦ / BẢNG ĐIỀU KHIỂN (DASHBOARD)
         const renderHome = () => {
             const chList = state.selectedSubject === 'pldc' ? pl_chapters : ktct_chapters;
             const correctTotal = Object.values(state.statsData).reduce((a, b) => a + b, 0);
@@ -697,31 +708,33 @@
                 const progressPercentage = Math.round((progressVal / ch.count) * 100);
 
                 chaptersHTML += `
-                    <div class="bg-white border border-slate-100 rounded-xl p-4 flex flex-col justify-between space-y-3 transition-all hover:border-slate-200 shadow-xs">
-                        <div class="space-y-1">
-                            <div class="flex justify-between items-center text-[10px] font-bold text-slate-400">
+                    <div class="bg-white border border-slate-100 rounded-3xl p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-md transition duration-200">
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between items-center text-[10px] font-black tracking-widest text-slate-400 uppercase">
                                 <span>CHƯƠNG ${ch.id}</span>
-                                <span>${ch.count} CÂU HỎI</span>
+                                <span class="bg-slate-50 text-slate-600 px-2 py-0.5 rounded-md">${ch.count} CÂU HỎI</span>
                             </div>
-                            <h3 class="text-xs font-extrabold text-slate-800 leading-snug">
+                            <h3 class="text-xs md:text-[13px] font-extrabold text-slate-800 leading-snug">
                                 ${ch.title.split(': ')[1]}
                             </h3>
                         </div>
 
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                                <span>Học lực tích lũy</span>
-                                <span>${progressVal}/${ch.count} (${progressPercentage}%)</span>
-                            </div>
-                            <div class="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                                <div class="bg-indigo-600 h-1 rounded-full transition-all duration-300" style="width: ${progressPercentage}%"></div>
+                        <div class="space-y-3.5 pt-1">
+                            <div class="space-y-1.5">
+                                <div class="flex justify-between text-[10px] font-extrabold text-slate-400 uppercase">
+                                    <span>Học lực tích lũy</span>
+                                    <span class="text-indigo-600 font-black">${progressVal}/${ch.count} (${progressPercentage}%)</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-indigo-600 h-1.5 rounded-full transition-all duration-300" style="width: ${progressPercentage}%"></div>
+                                </div>
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-1.5 pt-1">
-                                <button onclick="startChapterStudy(${ch.id})" class="py-2 text-center bg-slate-50 hover:bg-slate-100/80 text-indigo-600 text-[11px] font-extrabold rounded-lg transition active:scale-95">
+                            <div class="grid grid-cols-2 gap-2 pt-0.5">
+                                <button onclick="startChapterStudy(${ch.id})" class="py-2.5 text-center bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-extrabold rounded-2xl transition active:scale-95 duration-200 shadow-sm shadow-indigo-100/30">
                                     Luyện tập
                                 </button>
-                                <button onclick="startChapterFlashcard(${ch.id})" class="py-2 text-center bg-slate-50/50 hover:bg-slate-100/80 text-slate-600 text-[11px] font-bold rounded-lg transition active:scale-95">
+                                <button onclick="startChapterFlashcard(${ch.id})" class="py-2.5 text-center bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold rounded-2xl transition active:scale-95 duration-200">
                                     Thẻ 3D
                                 </button>
                             </div>
@@ -730,72 +743,74 @@
                 `;
             });
 
-            const limit = state.selectedSubject === 'ktct' ? 40 : 40;
+            const limit = 40;
 
             return `
                 <div class="space-y-5 animate-fadeIn">
-                    <div class="border border-slate-100 rounded-2xl p-5 space-y-3 bg-slate-50/30">
-                        <div class="flex justify-between items-center">
-                            <span class="inline-block text-[9px] font-black text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                                Đang hoạt động
+                    <div class="border border-slate-100 rounded-3xl p-5 space-y-4 bg-white shadow-sm relative overflow-hidden">
+                        <div class="absolute -right-16 -top-16 w-32 h-32 rounded-full bg-indigo-50/40"></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <span class="inline-flex items-center space-x-1.5 text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping"></span>
+                                <span>ĐANG HOẠT ĐỘNG</span>
                             </span>
-                            <button onclick="goBackToSubjectSelection()" class="text-[10px] font-extrabold text-slate-400 hover:text-indigo-600 transition flex items-center">
-                                ⇄ Đổi học phần khác
+                            <button onclick="goBackToSubjectSelection()" class="text-[11px] font-extrabold text-slate-400 hover:text-indigo-600 transition flex items-center bg-slate-50 hover:bg-slate-100 px-3 py-1.5 rounded-xl">
+                                ⇄ Đổi môn học
                             </button>
                         </div>
-                        <h1 class="text-lg font-black tracking-tight text-slate-900 leading-tight">
-                            Môn học: ${state.selectedSubject === 'ktct' ? 'Kinh tế Chính trị Mác-Lênin' : 'Pháp luật đại cương Việt Nam'}
+                        <h1 class="text-lg md:text-xl font-black tracking-tight text-slate-900 leading-tight relative z-10">
+                            ${state.selectedSubject === 'ktct' ? 'Kinh tế Chính trị Mác-Lênin' : 'Pháp luật đại cương Việt Nam'}
                         </h1>
-                        <p class="text-[11px] text-slate-500 leading-relaxed font-medium">
-                            Bộ câu hỏi chính quy được đồng bộ 100% dữ liệu từ tài liệu ôn thi. Hãy rèn luyện kỹ năng và kiến thức theo chương hoặc tham gia kỳ thi tổng hợp bên dưới.
+                        <p class="text-xs text-slate-500 leading-relaxed font-medium relative z-10">
+                            Hệ thống tự học và thi thử chuẩn cấu trúc. Bạn có thể tự học qua từng chương trắc nghiệm độc lập hoặc nhấn thi thử tổng hợp 40 câu ngẫu nhiên.
                         </p>
                         
                         <!-- Stats Grid -->
-                        <div class="pt-3 border-t border-slate-100 grid grid-cols-3 gap-2 text-center">
-                            <div class="bg-white border border-slate-100 p-2 rounded-xl">
-                                <div class="text-sm font-black text-slate-800">${state.questions.length}</div>
-                                <div class="text-[8px] text-slate-400 font-bold uppercase tracking-wider">Tổng câu</div>
+                        <div class="pt-4 border-t border-slate-100 grid grid-cols-3 gap-3 text-center relative z-10">
+                            <div class="bg-slate-50/50 border border-slate-100 p-2.5 rounded-2xl">
+                                <div class="text-base font-black text-slate-800">${state.questions.length}</div>
+                                <div class="text-[8px] text-slate-400 font-extrabold uppercase tracking-widest mt-0.5">Tổng câu</div>
                             </div>
-                            <div class="bg-white border border-slate-100 p-2 rounded-xl">
-                                <div class="text-sm font-black text-indigo-600">${correctTotal}</div>
-                                <div class="text-[8px] text-indigo-400 font-bold uppercase tracking-wider">Luyện đúng</div>
+                            <div class="bg-indigo-50/30 border border-indigo-50/50 p-2.5 rounded-2xl">
+                                <div class="text-base font-black text-indigo-600">${correctTotal}</div>
+                                <div class="text-[8px] text-indigo-400 font-extrabold uppercase tracking-widest mt-0.5">Luyện đúng</div>
                             </div>
-                            <div class="bg-white border border-slate-100 p-2 rounded-xl">
-                                <div class="text-sm font-black text-emerald-600">${state.bookmarks.length}</div>
-                                <div class="text-[8px] text-emerald-400 font-bold uppercase tracking-wider">Đã lưu</div>
+                            <div class="bg-emerald-50/30 border border-emerald-50/50 p-2.5 rounded-2xl">
+                                <div class="text-base font-black text-emerald-600">${state.bookmarks.length}</div>
+                                <div class="text-[8px] text-emerald-400 font-extrabold uppercase tracking-widest mt-0.5">Đã lưu</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Main Actions -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="startExam()" class="bg-slate-900 text-white p-4 rounded-2xl active:scale-95 transition-all text-left flex flex-col justify-between h-24 relative overflow-hidden">
-                            <span class="block font-black text-sm">Thi Thử ${limit} Câu</span>
-                            <span class="block text-[8px] text-slate-300 font-bold uppercase tracking-wider">Lấy ngẫu nhiên từ kho đề</span>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="startExam()" class="bg-slate-900 hover:bg-slate-800 text-white p-5 rounded-3xl active:scale-[0.97] transition-all text-left flex flex-col justify-between h-28 relative overflow-hidden shadow-lg shadow-slate-900/10 group duration-300">
+                            <span class="block font-extrabold text-sm md:text-base group-hover:translate-x-1 transition duration-200">Thi Thử ${limit} Câu</span>
+                            <span class="block text-[9px] text-slate-300 font-black uppercase tracking-widest">Thời gian 60 phút • Đề ngẫu nhiên</span>
                         </button>
 
-                        <button onclick="viewWrongAnswers()" class="bg-white border border-slate-200 p-4 rounded-2xl active:scale-95 transition-all text-left flex flex-col justify-between h-24">
-                            <span class="block font-black text-sm text-slate-800">Sửa Câu Sai (${state.wrongAnswers.length})</span>
-                            <span class="block text-[8px] text-slate-400 font-bold uppercase tracking-wider">Chế độ khắc phục lỗ hổng</span>
+                        <button onclick="viewWrongAnswers()" class="bg-white border border-slate-200/80 p-5 rounded-3xl active:scale-[0.97] transition-all text-left flex flex-col justify-between h-28 hover:border-slate-300 shadow-sm hover:shadow-md duration-300">
+                            <span class="block font-extrabold text-sm md:text-base text-slate-800">Sửa Câu Sai (${state.wrongAnswers.length})</span>
+                            <span class="block text-[9px] text-slate-400 font-black uppercase tracking-widest">Ôn luyện lại các lỗi sai</span>
                         </button>
                     </div>
 
                     <!-- Mini Toolbar Navigation -->
-                    <div class="flex space-x-1.5 overflow-x-auto pb-1 scrollbar-none">
-                        <button onclick="viewBookmarks()" class="px-4 py-2 bg-slate-50 hover:bg-slate-100 rounded-xl text-[10px] font-black text-slate-600 whitespace-nowrap active:scale-95 transition">
-                            ⭐ Mục đã lưu (${state.bookmarks.length})
+                    <div class="flex space-x-2 overflow-x-auto pb-1.5 scrollbar-none">
+                        <button onclick="viewBookmarks()" class="px-4 py-2.5 bg-white border border-slate-100 hover:bg-slate-50 rounded-2xl text-[10px] font-extrabold text-slate-600 whitespace-nowrap active:scale-95 transition-clean shadow-xs flex items-center space-x-1">
+                            <span>⭐ Mục đã lưu (${state.bookmarks.length})</span>
                         </button>
-                        <button onclick="changeView('stats')" class="px-4 py-2 bg-slate-50 hover:bg-slate-100 rounded-xl text-[10px] font-black text-slate-600 whitespace-nowrap active:scale-95 transition">
-                            📊 Tiến độ học tập
+                        <button onclick="changeView('stats')" class="px-4 py-2.5 bg-white border border-slate-100 hover:bg-slate-50 rounded-2xl text-[10px] font-extrabold text-slate-600 whitespace-nowrap active:scale-95 transition-clean shadow-xs flex items-center space-x-1">
+                            <span>📊 Tiến độ học tập</span>
                         </button>
                     </div>
 
                     <!-- Chapters Grid -->
-                    <div class="space-y-3">
-                        <h2 class="text-[9px] font-black text-slate-400 tracking-widest uppercase">
+                    <div class="space-y-3.5">
+                        <h2 class="text-[10px] font-black text-slate-400 tracking-widest uppercase">
                             Học lý thuyết có mục tiêu
                         </h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             ${chaptersHTML}
                         </div>
                     </div>
@@ -805,6 +820,7 @@
 
         // KÍCH HOẠT CHƯƠNG LUYỆN TẬP
         const startChapterStudy = (chId) => {
+            synthSound('click');
             state.selectedChapter = chId;
             state.currentQuestionIndex = 0;
             state.selectedOption = null;
@@ -815,20 +831,21 @@
 
         // KÍCH HOẠT FLASHCARD CHƯƠNG
         const startChapterFlashcard = (chId) => {
+            synthSound('click');
             state.selectedChapter = chId;
             state.currentQuestionIndex = 0;
             state.flashcardFlipped = false;
             changeView('flashcard');
         };
 
-        // RENDER STUDY VIEW
+        // RENDER 3: CHẾ ĐỘ LUYỆN TẬP (STUDY VIEW)
         const renderStudy = () => {
             const chQuestions = state.selectedChapter === 'wrong' ? state.wrongAnswers : state.questions.filter(q => q.ch === state.selectedChapter);
             if (chQuestions.length === 0) {
                 return `
-                    <div class="text-center p-8 space-y-4">
-                        <p class="text-xs text-slate-400 font-bold">Chương này hiện chưa có dữ liệu câu hỏi.</p>
-                        <button onclick="changeView('home')" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg">Quay lại</button>
+                    <div class="text-center p-8 space-y-4 bg-white rounded-3xl border border-slate-150 shadow-sm animate-fadeIn">
+                        <p class="text-xs text-slate-400 font-extrabold">Hiện không có câu hỏi nào trong chương này.</p>
+                        <button onclick="changeView('home')" class="px-5 py-2.5 bg-indigo-600 text-white text-xs font-black rounded-2xl shadow-md shadow-indigo-100 active:scale-95 transition">Quay lại</button>
                     </div>
                 `;
             }
@@ -838,24 +855,24 @@
             let optionsHTML = '';
             currentQ.o.forEach((opt, idx) => {
                 const letter = ["A", "B", "C", "D"][idx];
-                let btnStyle = "border-slate-100 bg-slate-50/50 text-slate-700 hover:bg-slate-50 hover:border-slate-200";
+                let btnStyle = "border-slate-100 bg-slate-50/50 text-slate-700 hover:bg-slate-100/70 hover:border-slate-200";
                 let badgeStyle = "bg-slate-200/60 text-slate-500";
                 
                 if (state.isAnswered) {
                     if (idx === currentQ.ans) {
-                        btnStyle = "border-emerald-500 bg-emerald-50/65 text-emerald-800 font-extrabold";
+                        btnStyle = "border-emerald-500 bg-emerald-50/60 text-emerald-800 font-extrabold shadow-sm shadow-emerald-100";
                         badgeStyle = "bg-emerald-500 text-white";
                     } else if (idx === state.selectedOption) {
-                        btnStyle = "border-rose-500 bg-rose-50/60 text-rose-800";
+                        btnStyle = "border-rose-500 bg-rose-50/60 text-rose-800 shadow-sm shadow-rose-100";
                         badgeStyle = "bg-rose-500 text-white";
                     } else {
-                        btnStyle = "border-slate-100 bg-white text-slate-400";
+                        btnStyle = "border-slate-100 bg-white text-slate-400 opacity-60";
                     }
                 }
 
                 optionsHTML += `
-                    <button onclick="selectStudyOption(${idx})" ${state.isAnswered ? 'disabled' : ''} class="w-full p-3.5 border rounded-xl text-left text-xs flex items-start space-x-2.5 transition-all ${btnStyle}">
-                        <span class="inline-flex items-center justify-center w-5.5 h-5.5 rounded-lg text-[11px] font-black shrink-0 ${badgeStyle}">
+                    <button onclick="selectStudyOption(${idx})" ${state.isAnswered ? 'disabled' : ''} class="w-full p-4 border rounded-2xl text-left text-xs md:text-sm flex items-start space-x-3 transition-clean ${btnStyle} active:scale-[0.99]">
+                        <span class="inline-flex items-center justify-center w-6 h-6 rounded-xl text-xs font-extrabold shrink-0 transition-clean ${badgeStyle}">
                             ${letter}
                         </span>
                         <span class="leading-relaxed font-semibold pt-0.5">${opt}</span>
@@ -863,11 +880,10 @@
                 `;
             });
 
-            // Nút "Thử lại câu này" nếu người dùng chọn sai phương án
             let retryButtonHTML = '';
             if (state.isAnswered && state.selectedOption !== currentQ.ans) {
                 retryButtonHTML = `
-                    <button onclick="retryCurrentQuestion()" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-black rounded-xl active:scale-95 transition mr-2 flex items-center">
+                    <button onclick="retryCurrentQuestion()" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-extrabold rounded-2xl active:scale-95 transition-clean flex items-center shadow-md shadow-amber-100 mr-2">
                         🔄 Thử lại câu này
                     </button>
                 `;
@@ -875,45 +891,45 @@
 
             return `
                 <div class="space-y-4 animate-fadeIn">
-                    <div class="flex items-center justify-between pb-1.5 border-b border-slate-100">
-                        <button onclick="toggleZenMode()" class="flex items-center space-x-1 px-2.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-slate-100 text-slate-600 hover:bg-slate-200">
+                    <div class="flex items-center justify-between pb-1.5">
+                        <button onclick="toggleZenMode()" class="flex items-center space-x-1 px-3 py-1.5 rounded-full text-[9px] font-extrabold uppercase tracking-widest bg-slate-100 text-slate-600 hover:bg-slate-200">
                             <span>TẬP TRUNG</span>
                         </button>
                         
                         <div class="flex items-center space-x-2">
-                            <span class="text-xs font-bold text-slate-400">${state.currentQuestionIndex + 1}/${chQuestions.length}</span>
-                            <button onclick="toggleBookmark(${currentQ.ch}, ${currentQ.id})" class="p-1.5 text-slate-400 hover:text-yellow-500 transition rounded-lg">
+                            <span class="text-xs font-extrabold text-slate-400 bg-white border border-slate-100 px-3 py-1.5 rounded-xl">${state.currentQuestionIndex + 1}/${chQuestions.length}</span>
+                            <button onclick="toggleBookmark(${currentQ.ch}, ${currentQ.id})" class="p-2 text-slate-400 hover:text-yellow-500 transition rounded-xl bg-white border border-slate-100 shadow-sm active:scale-90">
                                 <svg class="w-4.5 h-4.5 ${isBookmarkedVal ? 'fill-yellow-400 text-yellow-400' : ''}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                 </svg>
                             </button>
-                            <span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">Đúng: ${state.score}</span>
+                            <span class="text-xs font-extrabold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100">Đúng: ${state.score}</span>
                         </div>
                     </div>
 
-                    <!-- Tiến trình học tập dạng mượt -->
-                    <div class="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                        <div class="bg-indigo-600 h-1 rounded-full transition-all duration-300" style="width: ${((state.currentQuestionIndex + 1) / chQuestions.length) * 100}%"></div>
+                    <!-- Tiến trình học -->
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: ${((state.currentQuestionIndex + 1) / chQuestions.length) * 100}%"></div>
                     </div>
 
                     <!-- Question card -->
-                    <div class="bg-white border border-slate-100 rounded-2xl p-5 space-y-4 shadow-sm">
-                        <span class="text-[9px] font-black text-indigo-500 bg-indigo-50/50 px-2 py-0.5 rounded-md">CÂU HỎI ${currentQ.id}</span>
-                        <h3 class="text-sm md:text-base font-extrabold text-slate-900 leading-relaxed">
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 space-y-5 shadow-sm">
+                        <span class="inline-block text-[9px] font-black text-indigo-500 bg-indigo-50 px-2.5 py-1 rounded-lg uppercase tracking-wider">CÂU HỎI ${currentQ.id}</span>
+                        <h3 class="text-sm md:text-base font-extrabold text-slate-850 leading-relaxed">
                             ${currentQ.q}
                         </h3>
-                        <div class="space-y-2.5 pt-1">
+                        <div class="space-y-3 pt-1">
                             ${optionsHTML}
                         </div>
                     </div>
 
                     <div class="flex justify-between items-center pt-2">
-                        <button onclick="prevStudyQuestion()" ${state.currentQuestionIndex === 0 ? 'disabled' : ''} class="px-3.5 py-2 text-xs font-black text-slate-400 hover:text-slate-800 disabled:opacity-30 transition">
+                        <button onclick="prevStudyQuestion()" ${state.currentQuestionIndex === 0 ? 'disabled' : ''} class="px-4 py-2.5 text-xs font-black text-slate-400 hover:text-slate-800 disabled:opacity-30 transition-clean active:scale-95">
                             ← Câu trước
                         </button>
                         <div class="flex items-center">
                             ${retryButtonHTML}
-                            <button onclick="nextStudyQuestion(${chQuestions.length})" class="px-5 py-2.5 bg-indigo-600 text-white text-xs font-black rounded-xl active:scale-95 transition shadow-xs">
+                            <button onclick="nextStudyQuestion(${chQuestions.length})" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-2xl active:scale-95 transition shadow-md shadow-indigo-100">
                                 ${state.currentQuestionIndex === chQuestions.length - 1 ? 'Kết thúc' : 'Câu sau →'}
                             </button>
                         </div>
@@ -922,7 +938,6 @@
             `;
         };
 
-        // XỬ LÝ LỰA CHỌN ĐÁP ÁN
         const selectStudyOption = (optIdx) => {
             if (state.isAnswered) return;
             state.selectedOption = optIdx;
@@ -937,7 +952,6 @@
                 updateMascot('correct', 'Thực sự xuất sắc! Bạn lựa chọn hoàn toàn chuẩn xác.');
                 
                 if (state.selectedChapter === 'wrong') {
-                    // Nếu trả lời đúng ở mục "Sửa câu sai", xóa khỏi danh sách lỗi ngay lập tức
                     state.wrongAnswers = state.wrongAnswers.filter(wa => !(wa.ch === currentQ.ch && wa.id === currentQ.id));
                 } else {
                     state.statsData[state.selectedChapter] = Math.max(
@@ -958,7 +972,6 @@
             renderView();
         };
 
-        // THỬ LẠI CÂU HỎI HIỆN TẠI
         const retryCurrentQuestion = () => {
             synthSound('click');
             state.isAnswered = false;
@@ -992,7 +1005,7 @@
             }
         };
 
-        // RENDER FLASHCARD VIEW
+        // RENDER 4: THẺ FLASHCARD 3D CAO CẤP (FLASHCARD VIEW)
         const renderFlashcard = () => {
             const chQuestions = state.questions.filter(q => q.ch === state.selectedChapter);
             if (chQuestions.length === 0) {
@@ -1002,13 +1015,13 @@
             const isBookmarkedVal = isBookmarked(currentQ.ch, currentQ.id);
 
             return `
-                <div class="space-y-4 animate-fadeIn max-w-md mx-auto">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="space-y-5 animate-fadeIn max-w-md mx-auto">
+                    <div class="flex items-center justify-between pb-2">
                         <div>
                             <span class="text-[9px] font-black text-indigo-600 block uppercase tracking-wider">Flashcard Chương ${state.selectedChapter}</span>
-                            <span class="text-[11px] font-bold text-slate-400">Thẻ ${state.currentQuestionIndex + 1} / ${chQuestions.length}</span>
+                            <span class="text-xs font-extrabold text-slate-400">Thẻ ${state.currentQuestionIndex + 1} / ${chQuestions.length}</span>
                         </div>
-                        <button onclick="toggleBookmark(${currentQ.ch}, ${currentQ.id})" class="p-1.5 text-slate-400 hover:text-yellow-500 transition rounded-xl">
+                        <button onclick="toggleBookmark(${currentQ.ch}, ${currentQ.id})" class="p-2 text-slate-400 hover:text-yellow-500 transition rounded-xl bg-white border border-slate-100 shadow-sm active:scale-90">
                             <svg class="w-4.5 h-4.5 ${isBookmarkedVal ? 'fill-yellow-400 text-yellow-400' : ''}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                             </svg>
@@ -1016,39 +1029,39 @@
                     </div>
 
                     <!-- MINIMAL 3D FLASHCARD -->
-                    <div onclick="flipFlashcard()" class="perspective-1000 w-full h-56 cursor-pointer relative">
-                        <div class="w-full h-full duration-300 transform-style-3d relative ${state.flashcardFlipped ? 'rotate-y-180' : ''}">
+                    <div onclick="flipFlashcard()" class="perspective-1000 w-full h-64 cursor-pointer relative">
+                        <div class="w-full h-full duration-500 transform-style-3d relative ${state.flashcardFlipped ? 'rotate-y-180' : ''}">
                             
-                            <!-- FRONT -->
-                            <div class="absolute inset-0 bg-white border border-slate-200 rounded-2xl p-5 flex flex-col justify-between items-center text-center backface-hidden shadow-xs">
-                                <div class="text-[8px] font-black text-slate-300 uppercase tracking-widest">
+                            <!-- MẶT TRƯỚC (HỎI) -->
+                            <div class="absolute inset-0 bg-white border border-slate-200/80 rounded-3xl p-6 flex flex-col justify-between items-center text-center backface-hidden shadow-md">
+                                <div class="text-[9px] font-black text-slate-300 uppercase tracking-widest bg-slate-50 px-2.5 py-1 rounded-lg">
                                     MẶT HỎI • CÂU ${currentQ.id}
                                 </div>
-                                <div class="my-auto">
-                                    <h3 class="text-xs md:text-sm font-extrabold text-slate-800 leading-relaxed px-2">
+                                <div class="my-auto px-1">
+                                    <h3 class="text-sm md:text-base font-extrabold text-slate-800 leading-relaxed">
                                         ${currentQ.q}
                                     </h3>
                                 </div>
-                                <span class="text-[8px] font-black text-indigo-500 bg-indigo-50/50 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                                    Chạm để lật mặt đáp án
+                                <span class="text-[9px] font-black text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                                    Chạm để xem đáp án
                                 </span>
                             </div>
 
-                            <!-- BACK -->
-                            <div class="absolute inset-0 bg-emerald-50/30 border border-emerald-100 rounded-2xl p-5 flex flex-col justify-between items-center text-center rotate-y-180 backface-hidden shadow-xs">
-                                <div class="text-[8px] font-black text-emerald-500 uppercase tracking-widest">
+                            <!-- MẶT SAU (ĐÁP ÁN) -->
+                            <div class="absolute inset-0 bg-emerald-50/20 border border-emerald-100/80 rounded-3xl p-6 flex flex-col justify-between items-center text-center rotate-y-180 backface-hidden shadow-md">
+                                <div class="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-50 px-2.5 py-1 rounded-lg">
                                     ĐÁP ÁN CHÍNH XÁC
                                 </div>
-                                <div class="my-auto px-2 space-y-2">
-                                    <span class="inline-block bg-emerald-500 text-white text-[8px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                <div class="my-auto px-1 space-y-3">
+                                    <span class="inline-block bg-emerald-500 text-white text-[9px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow-sm shadow-emerald-100">
                                         Đáp án: ${["A", "B", "C", "D"][currentQ.ans]}
                                     </span>
-                                    <p class="text-xs md:text-sm font-black text-emerald-800 leading-relaxed">
+                                    <p class="text-xs md:text-sm font-extrabold text-emerald-950 leading-relaxed">
                                         ${currentQ.o[currentQ.ans]}
                                     </p>
                                 </div>
-                                <span class="text-[8px] font-black text-slate-400 bg-white border border-slate-100 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                                    Chạm để lật ngược lại
+                                <span class="text-[9px] font-black text-slate-400 bg-white border border-slate-150 px-3 py-1 rounded-full uppercase tracking-wider">
+                                    Chạm để xem câu hỏi
                                 </span>
                             </div>
 
@@ -1056,10 +1069,10 @@
                     </div>
 
                     <div class="flex justify-between items-center">
-                        <button onclick="prevFlashcard()" ${state.currentQuestionIndex === 0 ? 'disabled' : ''} class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-slate-700 disabled:opacity-30 transition">
+                        <button onclick="prevFlashcard()" ${state.currentQuestionIndex === 0 ? 'disabled' : ''} class="px-4 py-2.5 text-xs font-black text-slate-400 hover:text-slate-700 disabled:opacity-30 transition-clean active:scale-95">
                             ← Trở về
                         </button>
-                        <button onclick="nextFlashcard(${chQuestions.length})" class="px-4 py-2 bg-indigo-600 text-white text-xs font-black rounded-xl hover:bg-indigo-700 active:scale-95 transition">
+                        <button onclick="nextFlashcard(${chQuestions.length})" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-2xl shadow-md shadow-indigo-100 active:scale-95 transition-clean">
                             ${state.currentQuestionIndex === chQuestions.length - 1 ? 'Hoàn tất' : 'Kế tiếp →'}
                         </button>
                     </div>
@@ -1095,65 +1108,7 @@
             }
         };
 
-        // RENDER 5: EXAM VIEW
-        const startExam = () => {
-            synthSound('click');
-            const shuffled = [...state.questions].sort(() => 0.5 - Math.random());
-            // Đối với KTCT lấy tối đa 14 câu, PLDC lấy tối đa 40 câu để phù hợp dung lượng
-            const limit = state.selectedSubject === 'ktct' ? 14 : 40;
-            state.examQuestions = shuffled.slice(0, limit);
-            state.examAnswers = {};
-            state.examSubmitted = false;
-            state.examTimeLeft = 3600;
-            state.examActive = true;
-            
-            clearInterval(examTimerInterval);
-            examTimerInterval = setInterval(() => {
-                if (state.examActive && state.examTimeLeft > 0) {
-                    state.examTimeLeft--;
-                    updateExamTimerDisplay();
-                } else if (state.examTimeLeft === 0 && state.examActive) {
-                    submitExam();
-                }
-            }, 1000);
-
-            changeView('exam');
-        };
-
-        let examTimerInterval = null;
-        const updateExamTimerDisplay = () => {
-            const timerSpan = document.getElementById('exam-timer');
-            if (timerSpan) {
-                timerSpan.innerText = formatTime(state.examTimeLeft);
-            }
-        };
-
-        const selectExamOption = (qIdx, optIdx) => {
-            if (state.examSubmitted) return;
-            synthSound('click');
-            state.examAnswers[qIdx] = optIdx;
-            renderView();
-        };
-
-        const submitExam = () => {
-            clearInterval(examTimerInterval);
-            state.examActive = false;
-            state.examSubmitted = true;
-            synthSound('fanfare');
-
-            let examScore = 0;
-            state.examQuestions.forEach((q, idx) => {
-                if (state.examAnswers[idx] === q.ans) {
-                    examScore++;
-                }
-            });
-
-            updateMascot('correct', `Nộp bài thi! Kết quả đạt ${examScore}/${state.examQuestions.length} câu đúng.`);
-            showModal("Kết quả thi thử", `Điểm số thực tế của bạn: ${examScore}/${state.examQuestions.length}.`);
-            renderView();
-        };
-
-        // RENDER EXAM VIEW DETAIL
+        // RENDER 5: KỲ THI THỬ MÔ PHỎNG (EXAM VIEW)
         const renderExam = () => {
             let questionsListHTML = '';
             
@@ -1162,18 +1117,18 @@
                 let optionsHTML = '';
 
                 q.o.forEach((opt, optIdx) => {
-                    let btnStyle = "border-slate-100 bg-slate-50/50 text-slate-700 hover:bg-slate-50";
+                    let btnStyle = "border-slate-100 bg-slate-50/50 text-slate-700 hover:bg-slate-100/70";
                     let badgeStyle = "bg-slate-200/60 text-slate-400";
                     
                     if (state.examSubmitted) {
                         if (optIdx === q.ans) {
-                            btnStyle = "border-emerald-500 bg-emerald-50/80 text-emerald-800 font-extrabold";
+                            btnStyle = "border-emerald-500 bg-emerald-50/60 text-emerald-800 font-extrabold shadow-sm";
                             badgeStyle = "bg-emerald-500 text-white";
                         } else if (optIdx === userChoice) {
-                            btnStyle = "border-rose-500 bg-rose-50 text-rose-800";
+                            btnStyle = "border-rose-500 bg-rose-50 text-rose-800 shadow-sm";
                             badgeStyle = "bg-rose-500 text-white";
                         } else {
-                            btnStyle = "border-slate-100 text-slate-400";
+                            btnStyle = "border-slate-100 text-slate-400 opacity-60";
                         }
                     } else if (userChoice === optIdx) {
                         btnStyle = "border-indigo-500 bg-indigo-50/80 text-indigo-800 font-bold";
@@ -1181,27 +1136,27 @@
                     }
 
                     optionsHTML += `
-                        <button ${state.examSubmitted ? 'disabled' : ''} onclick="selectExamOption(${qIdx}, ${optIdx})" class="p-3 border rounded-xl text-left text-xs flex items-start space-x-2 transition-all ${btnStyle}">
-                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-md text-[10px] font-black shrink-0 ${badgeStyle}">
+                        <button ${state.examSubmitted ? 'disabled' : ''} onclick="selectExamOption(${qIdx}, ${optIdx})" class="p-3 border rounded-2xl text-left text-xs flex items-start space-x-2.5 transition-all ${btnStyle}">
+                            <span class="inline-flex items-center justify-center w-5.5 h-5.5 rounded-lg text-[10px] font-black shrink-0 ${badgeStyle}">
                                 ${["A", "B", "C", "D"][optIdx]}
                             </span>
-                            <span class="leading-tight font-medium pt-0.5">${opt}</span>
+                            <span class="leading-tight font-semibold pt-0.5">${opt}</span>
                         </button>
                     `;
                 });
 
                 questionsListHTML += `
-                    <div class="bg-white border border-slate-100 rounded-2xl p-4.5 space-y-3 shadow-xs">
+                    <div class="bg-white border border-slate-100 rounded-3xl p-5 space-y-4 shadow-sm">
                         <div class="flex justify-between items-center">
-                            <span class="text-[9px] font-black text-indigo-600 bg-indigo-50/70 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                CÂU ${qIdx + 1}
+                            <span class="text-[9px] font-black text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg uppercase tracking-wider">
+                                CÂU HỎI ${qIdx + 1}
                             </span>
-                            <span class="text-[9px] font-bold text-slate-400 uppercase">Chương ${q.ch}</span>
+                            <span class="text-[9px] font-extrabold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg">Chương ${q.ch}</span>
                         </div>
-                        <h4 class="text-xs font-bold text-slate-800 leading-relaxed">
+                        <h4 class="text-xs md:text-sm font-extrabold text-slate-800 leading-relaxed">
                             ${q.q}
                         </h4>
-                        <div class="grid grid-cols-1 gap-2 pt-1">
+                        <div class="grid grid-cols-1 gap-2.5 pt-1">
                             ${optionsHTML}
                         </div>
                     </div>
@@ -1210,29 +1165,29 @@
 
             return `
                 <div class="space-y-4 animate-fadeIn">
-                    <div class="bg-white border border-slate-100 p-4 rounded-2xl flex justify-between items-center shadow-xs">
-                        <div>
-                            <span class="text-[10px] font-black text-indigo-600 block uppercase tracking-wider">KỲ THI THỬ TỔNG HỢP</span>
-                            <span class="text-[11px] font-bold text-slate-400">Thiết lập cấu trúc ngẫu nhiên</span>
+                    <div class="bg-white border border-slate-100 p-5 rounded-3xl flex justify-between items-center shadow-sm">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-black text-indigo-600 block uppercase tracking-widest">KỲ THI THỬ TỔNG HỢP</span>
+                            <span class="text-xs font-bold text-slate-400">Thiết lập bộ đề thi thử ngẫu nhiên</span>
                         </div>
                         <div class="text-right">
-                            <span id="exam-timer" class="text-sm font-mono font-black text-indigo-600 block">
+                            <span id="exam-timer" class="text-base font-mono font-black text-indigo-600 block">
                                 ${formatTime(state.examTimeLeft)}
                             </span>
                             <span class="text-[8px] text-slate-400 uppercase font-black tracking-widest">Thời gian còn lại</span>
                         </div>
                     </div>
 
-                    <div class="space-y-3.5">
+                    <div class="space-y-4">
                         ${questionsListHTML}
                     </div>
 
                     ${!state.examSubmitted ? `
-                        <button onclick="submitExam()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl shadow-xs active:scale-95 transition">
+                        <button onclick="submitExam()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-3xl shadow-lg shadow-indigo-100 active:scale-[0.98] transition duration-200">
                             Nộp bài kiểm tra ngay
                         </button>
                     ` : `
-                        <button onclick="changeView('home')" class="w-full py-3.5 bg-slate-800 hover:bg-slate-900 text-white font-black rounded-xl active:scale-95 transition">
+                        <button onclick="changeView('home')" class="w-full py-4 bg-slate-850 hover:bg-slate-900 text-white font-extrabold rounded-3xl active:scale-[0.98] transition">
                             Về Trang Chủ
                         </button>
                     `}
@@ -1240,7 +1195,7 @@
             `;
         };
 
-        // RENDER TRA CỨU CÂU HỎI
+        // RENDER 6: TRA CỨU CÂU HỎI (SEARCH VIEW)
         const renderSearch = () => {
             let resultsHTML = '';
             const searchVal = state.searchQuery.trim().toLowerCase();
@@ -1254,26 +1209,31 @@
                 if (filtered.length > 0) {
                     filtered.forEach((q) => {
                         resultsHTML += `
-                            <div class="bg-white border border-slate-100 rounded-xl p-4 shadow-xs space-y-2 animate-fadeIn">
-                                <div class="flex justify-between text-[9px] text-slate-400 font-bold uppercase">
+                            <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-3 animate-fadeIn">
+                                <div class="flex justify-between text-[9px] text-slate-400 font-extrabold uppercase tracking-wider bg-slate-50 p-2 rounded-xl">
                                     <span>CHƯƠNG ${q.ch} • CÂU ${q.id}</span>
-                                    <span class="text-indigo-600 font-extrabold">Đáp án đúng: ${["A", "B", "C", "D"][q.ans]}</span>
+                                    <span class="text-indigo-600 font-black">Đáp án đúng: ${["A", "B", "C", "D"][q.ans]}</span>
                                 </div>
-                                <h3 class="text-xs font-bold text-slate-800 leading-snug">${q.q}</h3>
-                                <div class="text-[11px] text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-100/50 font-medium">
-                                    <strong class="text-indigo-600 text-[9px] uppercase tracking-wider block mb-0.5">Nội dung đáp án:</strong> ${q.o[q.ans]}
+                                <h3 class="text-xs md:text-sm font-extrabold text-slate-800 leading-snug">${q.q}</h3>
+                                <div class="text-xs text-slate-500 bg-slate-50/50 p-3.5 rounded-2xl border border-slate-100/50 font-semibold">
+                                    <strong class="text-indigo-600 text-[9px] uppercase tracking-widest block mb-1">Đáp án:</strong> ${q.o[q.ans]}
                                 </div>
                             </div>
                         `;
                     });
                 } else {
-                    resultsHTML = `<p class="text-center text-xs text-slate-400 py-8 font-medium">Không tìm thấy câu hỏi phù hợp.</p>`;
+                    resultsHTML = `<p class="text-center text-xs text-slate-400 py-12 font-bold">Không tìm thấy câu hỏi phù hợp.</p>`;
                 }
             } else {
                 resultsHTML = `
-                    <div class="text-center text-xs text-slate-400 py-12 space-y-2 animate-fadeIn">
-                        <p class="font-extrabold text-slate-500">Bắt đầu nhập từ khóa cần tra cứu</p>
-                        <p class="text-[10px] text-slate-400 max-w-xs mx-auto">Bộ lọc thông minh sẽ tự động rà soát toàn bộ ngân hàng câu hỏi để hiển thị đáp án chính xác nhất.</p>
+                    <div class="text-center text-xs text-slate-400 py-12 space-y-3 bg-white border border-slate-100 rounded-3xl animate-fadeIn shadow-sm">
+                        <div class="bg-indigo-50 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-indigo-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <p class="font-extrabold text-slate-600">Bắt đầu nhập từ khóa cần tra cứu</p>
+                        <p class="text-[10px] text-slate-400 max-w-xs mx-auto leading-relaxed">Hệ thống hỗ trợ tra cứu trực tiếp toàn diện 100% ngân hàng câu hỏi để tìm kiếm lời giải chính xác.</p>
                     </div>
                 `;
             }
@@ -1286,15 +1246,15 @@
                     </div>
 
                     <div class="relative">
-                        <input id="search-input" type="text" oninput="triggerSearch(this.value)" placeholder="Nhập từ khoá cần tra cứu..." value="${state.searchQuery}" class="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:outline-none focus:border-indigo-500 focus:bg-white transition-all font-semibold" />
-                        <span class="absolute left-3 top-3.5 text-slate-400">
+                        <input id="search-input" type="text" oninput="triggerSearch(this.value)" placeholder="Nhập từ khoá cần tra cứu..." value="${state.searchQuery}" class="w-full pl-11 pr-5 py-4 bg-white border border-slate-200 rounded-2xl text-xs md:text-sm focus:outline-none focus:border-indigo-500 shadow-sm transition-clean font-semibold" />
+                        <span class="absolute left-4 top-4.5 text-slate-400">
                             <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </span>
                     </div>
 
-                    <div class="space-y-2">
+                    <div class="space-y-3.5">
                         ${resultsHTML}
                     </div>
                 </div>
@@ -1311,7 +1271,7 @@
             }
         };
 
-        // RENDER TIẾN ĐỘ HỌC TẬP
+        // RENDER 7: BIỂU ĐỒ TIẾN ĐỘ HỌC TẬP (STATS VIEW)
         const renderStats = () => {
             const chList = state.selectedSubject === 'pldc' ? pl_chapters : ktct_chapters;
             let statsListHTML = '';
@@ -1320,13 +1280,13 @@
                 const progressPercentage = Math.round((progressVal / ch.count) * 100);
 
                 statsListHTML += `
-                    <div class="space-y-1.5">
-                        <div class="flex justify-between text-xs font-bold text-slate-700">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs font-extrabold text-slate-700">
                             <span>Chương ${ch.id}</span>
                             <span class="text-indigo-600">${progressVal}/${ch.count} (${progressPercentage}%)</span>
                         </div>
-                        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-                            <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: ${progressPercentage}%"></div>
+                        <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                            <div class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: ${progressPercentage}%"></div>
                         </div>
                     </div>
                 `;
@@ -1339,24 +1299,29 @@
                         <p class="text-[11px] text-slate-400 font-medium">Báo cáo mức độ thuộc bài trắc nghiệm của từng chương chi tiết.</p>
                     </div>
 
-                    <div class="bg-white border border-slate-100 rounded-2xl p-5 space-y-4 shadow-sm">
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 space-y-5 shadow-sm">
                         ${statsListHTML}
                     </div>
 
-                    <button onclick="changeView('home')" class="w-full py-3 bg-slate-850 hover:bg-slate-900 text-white text-xs font-black rounded-xl active:scale-95 transition">
+                    <button onclick="changeView('home')" class="w-full py-4 bg-slate-850 hover:bg-slate-900 text-white text-xs font-black rounded-3xl active:scale-95 transition">
                         Quay Lại Trang Chủ
                     </button>
                 </div>
             `;
         };
 
-        // RENDER SỬA CÂU SAI (ĐÃ ĐƯỢC NÂNG CẤP INTERACTIVE)
+        // RENDER 8: KHẮC PHỤC LỖ I SAI (WRONG ANSWERS REVIEW) - PREMIUM INTERACTIVE
         const renderWrongReview = () => {
             if (state.wrongAnswers.length === 0) {
                 return `
-                    <div class="text-center p-8 space-y-3">
-                        <p class="text-xs text-slate-400 font-bold">Hiện không có câu hỏi nào bị làm sai. Bạn đang làm rất tốt!</p>
-                        <button onclick="changeView('home')" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-xs active:scale-95 transition">Quay lại trang chủ</button>
+                    <div class="text-center p-8 space-y-4 bg-white border border-slate-100 rounded-3xl shadow-sm animate-fadeIn">
+                        <div class="bg-emerald-50 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-emerald-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-extrabold">Hiện không có câu hỏi nào bị làm sai. Bạn đã nắm rất vững kiến thức!</p>
+                        <button onclick="changeView('home')" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-2xl shadow-md active:scale-95 transition">Quay lại trang chủ</button>
                     </div>
                 `;
             }
@@ -1366,20 +1331,20 @@
                 q.o.forEach((opt, idx) => {
                     const isCorrectOption = idx === q.ans;
                     optionsHTML += `
-                        <div class="p-2.5 rounded-lg text-xs border font-medium ${isCorrectOption ? 'bg-emerald-50/50 border-emerald-100 text-emerald-800 font-bold' : 'bg-white border-slate-100 text-slate-400'}">
+                        <div class="p-3 rounded-xl text-xs border font-semibold ${isCorrectOption ? 'bg-emerald-50/50 border-emerald-100 text-emerald-800 font-extrabold shadow-xs' : 'bg-white border-slate-100 text-slate-400 opacity-75'}">
                             ${["A", "B", "C", "D"][idx]}. ${opt}
                         </div>
                     `;
                 });
 
                 wrongsListHTML += `
-                    <div class="bg-white border border-slate-100 rounded-xl p-4 space-y-2.5 shadow-xs">
-                        <div class="flex justify-between text-[9px] text-slate-400 font-bold uppercase">
+                    <div class="bg-white border border-slate-100 rounded-3xl p-5 space-y-3 shadow-xs">
+                        <div class="flex justify-between text-[9px] text-slate-400 font-extrabold uppercase tracking-wider bg-slate-50 p-2 rounded-xl">
                             <span>CHƯƠNG ${q.ch} • CÂU ${q.id}</span>
                             <span class="text-emerald-600 font-black">Đáp án đúng: ${["A", "B", "C", "D"][q.ans]}</span>
                         </div>
-                        <h3 class="text-xs font-bold text-slate-800 leading-snug">${q.q}</h3>
-                        <div class="space-y-1 pt-1">
+                        <h3 class="text-xs md:text-sm font-extrabold text-slate-850 leading-snug">${q.q}</h3>
+                        <div class="space-y-2 pt-1">
                             ${optionsHTML}
                         </div>
                     </div>
@@ -1388,33 +1353,32 @@
 
             return `
                 <div class="space-y-4 animate-fadeIn">
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center pb-2 border-b border-slate-100 space-y-2 sm:space-y-0">
-                        <div>
-                            <h2 class="text-sm font-black text-slate-800">Sửa đổi các câu làm sai (${state.wrongAnswers.length})</h2>
-                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Học từ sai lầm giúp tăng cơ hội đỗ tối đa</p>
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center pb-2 border-b border-slate-100 space-y-3 sm:space-y-0">
+                        <div class="space-y-1">
+                            <h2 class="text-sm font-black text-slate-800">Khắc phục câu làm sai (${state.wrongAnswers.length})</h2>
+                            <p class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wider">Học từ sai lầm để chuẩn bị cho kỳ thi chính thức tốt nhất</p>
                         </div>
-                        <div class="flex space-x-1.5 shrink-0">
-                            <button onclick="startWrongQuestionsPractice()" class="text-[11px] text-white font-black bg-indigo-600 px-3.5 py-2 rounded-xl hover:bg-indigo-700 transition shadow-xs active:scale-95 flex items-center">
-                                🎯 Luyện tập lại ngay
+                        <div class="flex space-x-2 shrink-0">
+                            <button onclick="startWrongQuestionsPractice()" class="text-xs text-white font-extrabold bg-indigo-600 px-4 py-2.5 rounded-2xl hover:bg-indigo-700 transition shadow-md shadow-indigo-100 active:scale-95 flex items-center space-x-1">
+                                <span>🎯 Luyện tập lại ngay</span>
                             </button>
-                            <button onclick="clearWrongAnswers()" class="text-[11px] text-rose-500 font-bold bg-rose-50 px-3.5 py-2 rounded-xl hover:bg-rose-100 transition active:scale-95">
+                            <button onclick="clearWrongAnswers()" class="text-xs text-rose-600 font-extrabold bg-rose-50 px-4 py-2.5 rounded-2xl hover:bg-rose-100 transition active:scale-95">
                                 Xoá lịch sử
                             </button>
                         </div>
                     </div>
 
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         ${wrongsListHTML}
                     </div>
 
-                    <button onclick="changeView('home')" class="w-full py-3 bg-slate-850 hover:bg-slate-900 text-white text-xs font-black rounded-xl active:scale-95 transition mt-4">
+                    <button onclick="changeView('home')" class="w-full py-4 bg-slate-850 hover:bg-slate-900 text-white text-xs font-black rounded-3xl active:scale-95 transition mt-4">
                         Quay Lại Trang Chủ
                     </button>
                 </div>
             `;
         };
 
-        // KÍCH HOẠT CHẾ ĐỘ THI/LUYỆN LẠI CÁC CÂU SAI
         const startWrongQuestionsPractice = () => {
             synthSound('click');
             state.selectedChapter = 'wrong';
@@ -1435,13 +1399,18 @@
             changeView('home');
         };
 
-        // RENDER DANH SÁCH LƯU TRỮ (BOOKMARKS)
+        // RENDER 9: DANH SÁCH LƯU TRỮ TRỌNG TÂM (BOOKMARKS REVIEW)
         const renderBookmarkReview = () => {
             if (state.bookmarks.length === 0) {
                 return `
-                    <div class="text-center p-8 space-y-3">
-                        <p class="text-xs text-slate-400 font-bold">Danh sách lưu trữ đang trống. Hãy bấm nút sao (⭐) khi luyện tập để thêm.</p>
-                        <button onclick="changeView('home')" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-xs active:scale-95 transition">Quay lại trang chủ</button>
+                    <div class="text-center p-8 space-y-4 bg-white border border-slate-100 rounded-3xl shadow-sm animate-fadeIn">
+                        <div class="bg-yellow-50 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-yellow-500">
+                            <svg class="w-6 h-6 fill-yellow-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-extrabold">Danh sách lưu trữ đang trống. Hãy nhấn nút sao (⭐) khi làm bài để lưu.</p>
+                        <button onclick="changeView('home')" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-2xl shadow-md active:scale-95 transition">Quay lại trang chủ</button>
                     </div>
                 `;
             }
@@ -1451,20 +1420,20 @@
                 q.o.forEach((opt, idx) => {
                     const isCorrectOption = idx === q.ans;
                     optionsHTML += `
-                        <div class="p-2.5 rounded-lg text-xs border font-medium ${isCorrectOption ? 'bg-emerald-50/50 border-emerald-100 text-emerald-800 font-bold' : 'bg-white border-slate-100 text-slate-400'}">
+                        <div class="p-3 rounded-xl text-xs border font-semibold ${isCorrectOption ? 'bg-emerald-50/50 border-emerald-100 text-emerald-800 font-extrabold' : 'bg-white border-slate-100 text-slate-400 opacity-75'}">
                             ${["A", "B", "C", "D"][idx]}. ${opt}
                         </div>
                     `;
                 });
 
                 bookmarksListHTML += `
-                    <div class="bg-white border border-slate-100 rounded-xl p-4 space-y-2.5 shadow-xs animate-fadeIn">
-                        <div class="flex justify-between text-[9px] text-slate-400 font-bold uppercase">
+                    <div class="bg-white border border-slate-100 rounded-3xl p-5 space-y-3 shadow-xs animate-fadeIn">
+                        <div class="flex justify-between text-[9px] text-slate-400 font-extrabold uppercase tracking-wider bg-slate-50 p-2 rounded-xl">
                             <span>CHƯƠNG ${q.ch} • CÂU ${q.id}</span>
                             <span class="text-indigo-600 font-black">Đáp án: ${["A", "B", "C", "D"][q.ans]}</span>
                         </div>
-                        <h3 class="text-xs font-bold text-slate-800 leading-snug">${q.q}</h3>
-                        <div class="space-y-1 pt-1">
+                        <h3 class="text-xs md:text-sm font-extrabold text-slate-850 leading-snug">${q.q}</h3>
+                        <div class="space-y-2 pt-1">
                             ${optionsHTML}
                         </div>
                     </div>
@@ -1474,20 +1443,20 @@
             return `
                 <div class="space-y-4 animate-fadeIn">
                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-                        <div>
+                        <div class="space-y-1">
                             <h2 class="text-sm font-black text-slate-800">Các câu hỏi lý thuyết đã lưu</h2>
-                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Danh sách ghi nhớ trọng tâm</p>
+                            <p class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wider">Danh sách ghi nhớ trọng tâm cá nhân</p>
                         </div>
-                        <button onclick="clearBookmarks()" class="text-xs text-slate-400 font-bold bg-slate-100 px-3 py-1 rounded-lg hover:bg-slate-200 transition">
+                        <button onclick="clearBookmarks()" class="text-xs text-slate-500 font-extrabold bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-2xl transition active:scale-95">
                             Hủy lưu tất cả
                         </button>
                     </div>
 
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         ${bookmarksListHTML}
                     </div>
 
-                    <button onclick="changeView('home')" class="w-full py-3 bg-slate-850 hover:bg-slate-900 text-white text-xs font-black rounded-xl active:scale-95 transition mt-4">
+                    <button onclick="changeView('home')" class="w-full py-4 bg-slate-850 hover:bg-slate-900 text-white text-xs font-black rounded-3xl active:scale-95 transition mt-4">
                         Quay Lại Trang Chủ
                     </button>
                 </div>
@@ -1504,7 +1473,7 @@
             changeView('home');
         };
 
-        // ROUTER RENDER PROCESSOR
+        // BỘ CHUYỂN ĐỔI GIAO DIỆN (ROUTER RENDER PROCESSOR)
         const renderView = () => {
             const router = document.getElementById('view-router');
             if (state.currentView === 'subject-select') {
@@ -1528,14 +1497,14 @@
             }
         };
 
-        // TIMER HELPER
+        // BỘ ĐẾM THỜI GIAN
         const formatTime = (seconds) => {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         };
 
-        // INIT APP ON LOAD
+        // KHỞI ĐỘNG ỨNG DỤNG LẦN ĐẦU (INIT ON LOAD)
         window.onload = function() {
             changeView('subject-select');
             updateMascot('idle', 'Hãy lựa chọn một học phần đại cương phù hợp bên dưới để tải bộ câu hỏi luyện tập!');
